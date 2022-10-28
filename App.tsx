@@ -10,6 +10,9 @@ import { Loading } from "./src/components/Loading";
 import { ThemeProvider } from "styled-components/native";
 import theme from "./src/theme";
 
+//pages
+import Home from "./src/screens/Home";
+
 export default function App() {
   const [fontsLoaded] = useFonts({
     NunitoSans_400Regular,
@@ -24,11 +27,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <View style={styles.container}>
         <StatusBar style="auto" />
-        {fontsLoaded ? (
-          <Text>Open up App.tsx to start working on your app!</Text>
-        ) : (
-          <Loading />
-        )}
+        {fontsLoaded ? <Home /> : <Loading />}
       </View>
     </ThemeProvider>
   );
