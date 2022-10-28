@@ -43,17 +43,21 @@ export const Status = styled.View<Pick<MealsCardProps, "status">>`
     ${status === "RED" && StatusModifer.red(theme)}
   `}
 `;
+
 export const Timer = styled.Text`
   ${({ theme }) => css`
     font-size: ${theme.FONT_SIZE.MD}px;
+    font-family: ${theme.FONT_FAMILY.BOLD};
     color: ${theme.COLORS.BASE.GRAY_200};
     font-weight: 600;
     margin: 0 8px;
   `}
 `;
+
 export const Title = styled.Text`
   ${({ theme }) => css`
     font-size: ${theme.FONT_SIZE.MD}px;
+    font-family: ${theme.FONT_FAMILY.REGULAR};
     color: ${theme.COLORS.BASE.GRAY_200};
     font-weight: 400;
     margin: 0 8px;
