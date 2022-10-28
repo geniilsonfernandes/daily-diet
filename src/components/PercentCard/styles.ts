@@ -7,7 +7,7 @@ type WrapperProps = {
 
 export const Wrapper = styled(TouchableOpacity)<WrapperProps>`
   ${({ theme, backgroundColor }) => css`
-    background: ${backgroundColor === "NORMAL"
+    background: ${backgroundColor !== "NORMAL"
       ? theme.COLORS.BRAND.GREEN.LIGHT
       : theme.COLORS.BRAND.RED.LIGHT};
     justify-content: center;

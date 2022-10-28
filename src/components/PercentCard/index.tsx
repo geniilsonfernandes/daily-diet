@@ -20,7 +20,7 @@ export const PercentCard = ({ percent = 0, limit = 75 }: PercentCardProps) => {
           name="arrow-up-right"
           size={24}
           color={
-            color === "NORMAL"
+            color !== "NORMAL"
               ? theme.COLORS.BRAND.GREEN.DARK
               : theme.COLORS.BRAND.RED.DARK
           }
