@@ -31,7 +31,16 @@ export default {
     SM: 14,
     MD: 16,
     LG: 18,
-    XL: 24
+    XL: 24,
+    XX: 32
   },
-  RADIUS: 6
+  RADIUS: 8,
+  SPACING: {
+    SM: 14,
+    MD: 16,
+    LG: 18,
+    XL: 24,
+    XX: 32,
+    XXX: 38
+  }
 };
