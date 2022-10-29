@@ -32,15 +32,18 @@ const StatusModifer = {
   `
 };
 
-export const Status = styled.View<Pick<MealsCardProps, "status">>`
-  ${({ theme, status }) => css`
+type StatusProps = {
+  color: "GREEN" | "RED";
+};
+
+export const Status = styled.View<StatusProps>`
+  ${({ theme, color }) => css`
     height: ${theme.FONT_SIZE.MD}px;
     width: ${theme.FONT_SIZE.MD}px;
     border-radius: ${theme.FONT_SIZE.MD / 2}px;
     background: transparent;
     margin-left: auto;
-    ${status === "GREEN" && StatusModifer.green(theme)}
-    ${status === "RED" && StatusModifer.red(theme)}
+    ${color === "GREEN" ? StatusModifer.green(theme) : StatusModifer.red(theme)}
   `}
 `;
 

@@ -2,17 +2,12 @@ import { TouchableOpacityProps } from "react-native";
 import * as S from "./styles";
 
 export type MealsCardProps = {
-  status?: "RED" | "GREEN";
   title: string;
   timer: string;
+  diet?: boolean;
 } & TouchableOpacityProps;
 
-export const MealsCard = ({
-  status,
-  title,
-  timer,
-  ...rest
-}: MealsCardProps) => {
+export const MealsCard = ({ title, timer, diet, ...rest }: MealsCardProps) => {
   const titleFormated =
     title.length > 30 ? `${title.substring(0, 30)}...` : title;
 
@@ -21,7 +16,7 @@ export const MealsCard = ({
       <S.Timer>{timer}</S.Timer>
       <S.Divisor />
       <S.Title>{titleFormated}</S.Title>
-      <S.Status status={status} />
+      <S.Status color={diet ? "GREEN" : "RED"} />
     </S.Wrapper>
   );
 };
