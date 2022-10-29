@@ -5,9 +5,9 @@ import getStatusColor from "../../utils/getStatusColor";
 import { PercentHeader } from "../../components/PercentHeader";
 import { HeaderNavigation } from "../../components/HeaderNavigation";
 import { Box } from "../../components/Box";
+import { StatisticsTypes } from "../../types";
 
 import * as S from "./styles";
-import { StatisticsTypes } from "../../types";
 
 function Statistics() {
   const params = useRoute();
