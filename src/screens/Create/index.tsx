@@ -1,7 +1,7 @@
 import DateTimePicker, {
   DateTimePickerEvent
 } from "@react-native-community/datetimepicker";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Platform, KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { useTheme } from "styled-components/native";
@@ -9,18 +9,28 @@ import moment from "moment";
 import { HeaderNavigation } from "../../components/HeaderNavigation";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
+import { ButtonOption } from "../../components/ButtonOption";
 
 import * as S from "./styles";
+import { useNavigation } from "@react-navigation/native";
 
 type DateTimePickerModes = "date" | "time";
+type Diet = "yes" | "no";
 type FormData = {
   name: string;
   description: string;
   date: Date | undefined;
   time: Date | undefined;
+  diet: Diet;
 };
 
 function Create() {
+  const navigation = useNavigation();
+
+  const handleNavigateToHome = () => {
+    navigation.navigate("Home");
+  };
+
   const theme = useTheme();
   const {
     control,
@@ -33,14 +43,18 @@ function Create() {
   const [show, setShow] = useState(false);
 
   const onChangeDateTimePicker = (event: DateTimePickerEvent, date?: Date) => {
-    if (mode === "date") {
-      setValue("date", date, { shouldValidate: true });
-      setDate(date);
-    } else {
-      setValue("time", date, { shouldValidate: true });
-      setDate(date);
-    }
     setShow(false);
+    if (mode === "date") {
+      setDate(date);
+      setValue("date", date, { shouldValidate: true });
+    } else {
+      setDate(date);
+      setValue("time", date, { shouldValidate: true });
+    }
+  };
+
+  const onChangeDiet = (diet: Diet) => {
+    setValue("diet", diet);
   };
 
   const showMode = (currentMode: DateTimePickerModes) => {
@@ -65,7 +79,10 @@ function Create() {
   return (
     <KeyboardAvoidingView style={{ backgroundColor: theme.COLORS.BASE.WHITE }}>
       <S.Wrapper backgroundColor={theme.COLORS.BASE.GRAY_500}>
-        <HeaderNavigation title="Nova Refeição" />
+        <HeaderNavigation
+          title="Nova Refeição"
+          onClickArrowLeft={handleNavigateToHome}
+        />
         <S.Content>
           <ScrollView style={{ marginBottom: theme.SPACING.SM }}>
             <Controller
@@ -149,6 +166,33 @@ function Create() {
                 )}
               />
             </View>
+
+            <S.DietOptions>
+              <S.Label>Está dentro da dieta?</S.Label>
+              <Controller
+                control={control}
+                name="diet"
+                rules={{ required: "Hora obrigatória" }}
+                render={({ field: { value } }) => (
+                  <View style={{ flexDirection: "row" }}>
+                    <ButtonOption
+                      color="GREEN"
+                      title="Sim"
+                      active={value === "yes"}
+                      onPress={() => onChangeDiet("yes")}
+                      style={{ marginRight: 8 }}
+                    />
+                    <ButtonOption
+                      color="RED"
+                      title="Não"
+                      active={value === "no"}
+                      style={{ marginLeft: 8 }}
+                      onPress={() => onChangeDiet("no")}
+                    />
+                  </View>
+                )}
+              />
+            </S.DietOptions>
           </ScrollView>
         </S.Content>
         <S.ContentFooter>
