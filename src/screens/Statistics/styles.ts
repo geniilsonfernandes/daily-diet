@@ -15,7 +15,7 @@ export const HeaderNavigation = styled.View`
   ${({ theme }) => css`
     position: absolute;
     top: 68px;
-    left: ${theme.SPACING.SM};
+    left: ${theme.SPACING.SM}px;
     z-index: 100;
   `}
 `;
