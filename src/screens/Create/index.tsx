@@ -1,8 +1,14 @@
 import DateTimePicker, {
   DateTimePickerEvent
 } from "@react-native-community/datetimepicker";
-import { useState } from "react";
-import { Platform, KeyboardAvoidingView, ScrollView, View } from "react-native";
+import { useEffect, useState } from "react";
+import {
+  Platform,
+  KeyboardAvoidingView,
+  ScrollView,
+  View,
+  Vibration
+} from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { useTheme } from "styled-components/native";
 import moment from "moment";
@@ -54,7 +60,7 @@ function Create() {
   };
 
   const onChangeDiet = (diet: Diet) => {
-    setValue("diet", diet);
+    setValue("diet", diet, { shouldValidate: true });
   };
 
   const showMode = (currentMode: DateTimePickerModes) => {
@@ -76,6 +82,12 @@ function Create() {
     console.log(data);
   };
 
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      Vibration.vibrate();
+    }
+  }, [errors]);
+
   return (
     <KeyboardAvoidingView style={{ backgroundColor: theme.COLORS.BASE.WHITE }}>
       <S.Wrapper backgroundColor={theme.COLORS.BASE.GRAY_500}>
@@ -84,7 +96,7 @@ function Create() {
           onClickArrowLeft={handleNavigateToHome}
         />
         <S.Content>
-          <ScrollView style={{ marginBottom: theme.SPACING.SM }}>
+          <ScrollView style={{ marginBottom: theme.SPACING.XL }}>
             <Controller
               control={control}
               name="name"
@@ -95,7 +107,7 @@ function Create() {
                   value={value}
                   onChangeText={onChange}
                   error={errors.name?.message}
-                  wrapperStyles={{ marginBottom: theme.SPACING.SM }}
+                  wrapperStyles={{ marginBottom: theme.SPACING.XL }}
                 />
               )}
             />
@@ -109,7 +121,7 @@ function Create() {
                   label={"Descrição"}
                   value={value}
                   onChangeText={onChange}
-                  wrapperStyles={{ marginBottom: theme.SPACING.SM }}
+                  wrapperStyles={{ marginBottom: theme.SPACING.XL }}
                   textInputStyles={{
                     textAlignVertical: "top",
                     paddingTop: theme.SPACING.MD
@@ -172,7 +184,7 @@ function Create() {
               <Controller
                 control={control}
                 name="diet"
-                rules={{ required: "Hora obrigatória" }}
+                rules={{ required: "Essa etapa é obrigatória" }}
                 render={({ field: { value } }) => (
                   <View style={{ flexDirection: "row" }}>
                     <ButtonOption
@@ -192,13 +204,21 @@ function Create() {
                   </View>
                 )}
               />
+              {errors.diet?.message && (
+                <S.Error>{errors.diet?.message}</S.Error>
+              )}
             </S.DietOptions>
           </ScrollView>
         </S.Content>
         <S.ContentFooter>
           <Button
-            title="Cadastrar refeição"
+            title={
+              Object.keys(errors).length > 0
+                ? "Preencha todos os campos "
+                : "Cadastrar refeição"
+            }
             fill
+            isDisabled={Object.keys(errors).length > 0 ? true : false}
             icon="paperclip"
             onPress={handleSubmit(onSubmit)}
           />

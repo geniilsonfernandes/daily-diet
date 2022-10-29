@@ -42,7 +42,7 @@ export const ContentFooter = styled.View`
 export const DietOptions = styled.View`
   ${({ theme }) => css`
     flex-grow: 1;
-    padding-top: ${theme.SPACING.SM}px;
+    padding-top: ${theme.SPACING.XL}px;
     padding-bottom: ${theme.SPACING.SM}px;
   `}
 `;
@@ -54,5 +54,14 @@ export const Label = styled.Text`
     color: ${theme.COLORS.BASE.GRAY_200};
     font-weight: 600;
     padding-bottom: 8px;
+  `}
+`;
+
+export const Error = styled.Text`
+  ${({ theme }) => css`
+    font-size: ${theme.FONT_SIZE.SM}px;
+    font-family: ${theme.FONT_FAMILY.REGULAR};
+    color: ${theme.COLORS.BRAND.RED.DARK};
+    padding-top: ${theme.SPACING.SS}px;
   `}
 `;
