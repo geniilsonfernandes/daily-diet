@@ -2,14 +2,12 @@ import { TouchableOpacity } from "react-native";
 import styled, { css } from "styled-components/native";
 
 type WrapperProps = {
-  backgroundColor?: "NORMAL" | "WARNING";
+  backgroundColor?: string;
 };
 
 export const Wrapper = styled(TouchableOpacity)<WrapperProps>`
   ${({ theme, backgroundColor }) => css`
-    background: ${backgroundColor !== "NORMAL"
-      ? theme.COLORS.BRAND.GREEN.LIGHT
-      : theme.COLORS.BRAND.RED.LIGHT};
+    background: ${backgroundColor};
     justify-content: center;
     width: 100%;
     padding: 20px;

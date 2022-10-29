@@ -1,17 +1,16 @@
 import styled, { css } from "styled-components/native";
 
 type WrapperProps = {
-  backgroundColor?: "NORMAL" | "WARNING";
+  backgroundColor?: string;
 };
 
 export const Wrapper = styled.View<WrapperProps>`
   ${({ theme, backgroundColor }) => css`
-    background: ${backgroundColor !== "NORMAL"
-      ? theme.COLORS.BRAND.GREEN.LIGHT
-      : theme.COLORS.BRAND.RED.LIGHT};
+    background: ${backgroundColor};
     justify-content: center;
     width: 100%;
-    height: 200px;
+    padding: 48px 0;
+    padding-bottom: 82px;
     align-items: center;
   `}
 `;
