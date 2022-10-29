@@ -41,6 +41,9 @@ function Home() {
       percent: pe
     });
   };
+  const handleCreateNewMeal = () => {
+    navigation.navigate("Create");
+  };
 
   return (
     <S.Wrapper>
@@ -48,7 +51,12 @@ function Home() {
       <PercentCard onPress={() => handleShowStatistics()} percent={pe} />
       <S.ListHead>
         <S.Label>Refeições</S.Label>
-        <Button title="Nova refeição" icon="plus" fill />
+        <Button
+          title="Nova refeição"
+          icon="plus"
+          fill
+          onPress={() => handleCreateNewMeal()}
+        />
       </S.ListHead>
       <View style={{ flex: 1, paddingBottom: 16 }}>
         <SectionList

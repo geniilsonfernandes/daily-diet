@@ -36,11 +36,13 @@ export default {
   },
   RADIUS: 8,
   SPACING: {
+    SS: 8,
     SM: 14,
     MD: 16,
     LG: 18,
     XL: 24,
     XX: 32,
-    XXX: 38
+    XXX: 38,
+    XY: 48
   }
-};
+} as const;
