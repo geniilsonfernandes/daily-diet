@@ -8,13 +8,20 @@ export type ButtonProps = {
   title: string;
   icon?: keyof typeof Feather.glyphMap;
   fill?: boolean;
+  isDisabled?: boolean;
 } & TouchableOpacityProps;
 
-export const Button = ({ title, icon, fill = false, ...rest }: ButtonProps) => {
+export const Button = ({
+  title,
+  icon,
+  fill = false,
+  isDisabled,
+  ...rest
+}: ButtonProps) => {
   const theme = useTheme();
 
   return (
-    <S.Wrapper {...rest} fill={fill}>
+    <S.Wrapper {...rest} fill={fill} isDisabled={isDisabled}>
       {icon && (
         <Feather
           name={icon}

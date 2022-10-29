@@ -9,11 +9,16 @@ const WrapperModifer = {
   border: (theme: DefaultTheme) => css`
     background: ${theme.COLORS.BASE.WHITE};
     border: ${theme.COLORS.BASE.GRAY_200};
+  `,
+  disabled: (theme: DefaultTheme) => css`
+    background: ${theme.COLORS.BASE.GRAY_300};
   `
 };
 
-export const Wrapper = styled(TouchableOpacity)<Pick<ButtonProps, "fill">>`
-  ${({ theme, fill }) => css`
+export const Wrapper = styled(TouchableOpacity)<
+  Pick<ButtonProps, "fill" | "isDisabled">
+>`
+  ${({ theme, fill, isDisabled }) => css`
     background: ${theme.COLORS.BASE.GRAY_200};
     border-radius: ${theme.RADIUS}px;
     height: 50px;
@@ -22,6 +27,7 @@ export const Wrapper = styled(TouchableOpacity)<Pick<ButtonProps, "fill">>`
     width: 100%;
     flex-direction: row;
     ${fill ? WrapperModifer.fill(theme) : WrapperModifer.border(theme)}
+    ${isDisabled && WrapperModifer.disabled(theme)}
   `}
 `;
 
