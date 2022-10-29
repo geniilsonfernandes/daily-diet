@@ -9,16 +9,18 @@ function Home() {
   const navigation = useNavigation();
 
   const handleShowStatistics = () => {
-    navigation.navigate("Statistics");
+    navigation.navigate("Statistics", {
+      percent: 86
+    });
   };
 
   return (
     <S.Wrapper>
       <Header />
-      <PercentCard onPress={() => handleShowStatistics()} percent={76} />
+      <PercentCard onPress={() => handleShowStatistics()} percent={45} />
       <S.ListHead>
         <S.Label>Refeições</S.Label>
-        <Button title="Nova refeição" icon="activity" fill />
+        <Button title="Nova refeição" icon="plus" fill />
       </S.ListHead>
     </S.Wrapper>
   );

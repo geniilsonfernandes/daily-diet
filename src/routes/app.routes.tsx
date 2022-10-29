@@ -3,9 +3,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 //screens
 import Home from "../screens/Home";
 import Statistics from "../screens/Statistics";
+import { StatisticsTypes } from "../types";
 
 export interface AuthStackParamList {
-  Statistics: undefined;
+  Statistics: StatisticsTypes;
   Home: undefined;
   New: undefined;
 }

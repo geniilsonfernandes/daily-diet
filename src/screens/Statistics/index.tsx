@@ -1,15 +1,19 @@
 import { View } from "react-native";
 import { useTheme } from "styled-components/native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import getStatusColor from "../../utils/getStatusColor";
 import { PercentHeader } from "../../components/PercentHeader";
 import { HeaderNavigation } from "../../components/HeaderNavigation";
 import { Box } from "../../components/Box";
 
 import * as S from "./styles";
+import { StatisticsTypes } from "../../types";
 
 function Statistics() {
-  const statusColor = getStatusColor(54);
+  const params = useRoute();
+  const item = params.params as StatisticsTypes;
+
+  const statusColor = getStatusColor(item.percent);
   const navigation = useNavigation();
   const theme = useTheme();
 
@@ -24,7 +28,7 @@ function Statistics() {
         color={statusColor.dark}
       />
 
-      <PercentHeader percent={90.86} />
+      <PercentHeader percent={item.percent} />
 
       <S.Content>
         <S.ContentHead>

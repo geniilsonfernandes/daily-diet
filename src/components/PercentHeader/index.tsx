@@ -7,7 +7,7 @@ export type PercentHeaderProps = {
 };
 
 export const PercentHeader = ({ percent = 0 }: PercentHeaderProps) => {
-  const statusColor = getStatusColor(54);
+  const statusColor = getStatusColor(percent);
 
   return (
     <S.Wrapper backgroundColor={statusColor.light}>
