@@ -23,36 +23,46 @@ function Statistics() {
         onClickArrowLeft={handleGoBack}
         color={statusColor.dark}
       />
+
       <PercentHeader percent={90.86} />
+
       <S.Content>
         <S.ContentHead>
           <S.ContentText>Estatísticas gerais</S.ContentText>
         </S.ContentHead>
-        <View style={{ paddingBottom: theme.SPACING.MD }}>
-          <Box>
-            <S.BoxTitle>4</S.BoxTitle>
-            <S.SubTitle>melhor sequência de pratos dentro da dieta</S.SubTitle>
+
+        <Box style={{ marginBottom: theme.SPACING.MD }}>
+          <S.BoxTitle>4</S.BoxTitle>
+          <S.SubTitle>melhor sequência de pratos dentro da dieta</S.SubTitle>
+        </Box>
+
+        <Box style={{ marginBottom: theme.SPACING.MD }}>
+          <S.BoxTitle>109</S.BoxTitle>
+          <S.SubTitle>refeições registradas</S.SubTitle>
+        </Box>
+
+        <View
+          style={{
+            paddingBottom: theme.SPACING.MD,
+            flexDirection: "row",
+            justifyContent: "space-between"
+          }}
+        >
+          <Box
+            backgroundColor={theme.COLORS.BRAND.GREEN.LIGHT}
+            style={{ width: "47%" }}
+          >
+            <S.BoxTitle>32</S.BoxTitle>
+            <S.SubTitle>refeições dentro da dieta</S.SubTitle>
           </Box>
-        </View>
-        <View style={{ paddingBottom: theme.SPACING.MD }}>
-          <Box>
-            <S.BoxTitle>109</S.BoxTitle>
-            <S.SubTitle>refeições registradas</S.SubTitle>
+
+          <Box
+            backgroundColor={theme.COLORS.BRAND.RED.LIGHT}
+            style={{ width: "47%" }}
+          >
+            <S.BoxTitle>77</S.BoxTitle>
+            <S.SubTitle>refeições fora da dieta</S.SubTitle>
           </Box>
-        </View>
-        <View style={{ paddingBottom: theme.SPACING.MD, flexDirection: "row" }}>
-          <View style={{ width: "50%", paddingRight: theme.SPACING.MD / 2 }}>
-            <Box backgroundColor={theme.COLORS.BRAND.GREEN.LIGHT}>
-              <S.BoxTitle>32</S.BoxTitle>
-              <S.SubTitle>refeições dentro da dieta</S.SubTitle>
-            </Box>
-          </View>
-          <View style={{ width: "50%", paddingLeft: theme.SPACING.MD / 2 }}>
-            <Box backgroundColor={theme.COLORS.BRAND.RED.LIGHT}>
-              <S.BoxTitle>77</S.BoxTitle>
-              <S.SubTitle>refeições fora da dieta</S.SubTitle>
-            </Box>
-          </View>
         </View>
       </S.Content>
     </S.Wrapper>
