@@ -18,7 +18,7 @@ function Home() {
       <PercentCard onPress={() => handleShowStatistics()} percent={76} />
       <S.ListHead>
         <S.Label>Refeições</S.Label>
-        <Button title="Nova refeição" />
+        <Button title="Nova refeição" icon="activity" fill />
       </S.ListHead>
     </S.Wrapper>
   );
