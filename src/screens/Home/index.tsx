@@ -1,16 +1,26 @@
+import { useNavigation } from "@react-navigation/native";
 import { Button } from "../../components/Button";
-import { MealsCard } from "../../components/MealsCard";
+import { Header } from "../../components/Header";
+import { PercentCard } from "../../components/PercentCard";
+
+import * as S from "./styles";
+
 function Home() {
+  const navigation = useNavigation();
+
+  const handleShowStatistics = () => {
+    navigation.navigate("Statistics");
+  };
+
   return (
-    <>
-      <Button title="Nova refeição" fill={false} />
-      <MealsCard status="GREEN" title="X-tudo" timer="20:00" />
-      <MealsCard
-        status="RED"
-        title="Salada cesar com frango grelhado"
-        timer="17:22"
-      />
-    </>
+    <S.Wrapper>
+      <Header />
+      <PercentCard onPress={() => handleShowStatistics()} percent={76} />
+      <S.ListHead>
+        <S.Label>Refeições</S.Label>
+        <Button title="Nova refeição" />
+      </S.ListHead>
+    </S.Wrapper>
   );
 }
 
