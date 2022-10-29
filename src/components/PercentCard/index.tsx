@@ -2,7 +2,7 @@ import { TouchableOpacityProps } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
 import * as S from "./styles";
-import getStatusColor from "../../utils/statusColor";
+import getStatusColor from "../../utils/getStatusColor";
 
 export type PercentCardProps = {
   percent?: number;

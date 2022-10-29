@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { useTheme } from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
-import getStatusColor from "../../utils/statusColor";
+import getStatusColor from "../../utils/getStatusColor";
 import { PercentHeader } from "../../components/PercentHeader";
 import { HeaderNavigation } from "../../components/HeaderNavigation";
 import { Box } from "../../components/Box";

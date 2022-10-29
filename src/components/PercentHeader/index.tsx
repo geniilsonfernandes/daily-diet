@@ -1,5 +1,5 @@
 import * as S from "./styles";
-import getStatusColor from "../../utils/statusColor";
+import getStatusColor from "../../utils/getStatusColor";
 
 export type PercentHeaderProps = {
   percent?: number;
