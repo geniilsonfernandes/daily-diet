@@ -10,8 +10,8 @@ import { Loading } from "./src/components/Loading";
 import { ThemeProvider } from "styled-components/native";
 import theme from "./src/theme";
 
-//pages
-import Home from "./src/screens/Home";
+// Routes
+import Routes from "./src/routes";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -27,7 +27,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <View style={styles.container}>
         <StatusBar style="auto" />
-        {fontsLoaded ? <Home /> : <Loading />}
+        {fontsLoaded ? <Routes /> : <Loading />}
       </View>
     </ThemeProvider>
   );
@@ -36,8 +36,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
+    backgroundColor: "#fff"
   }
 });
