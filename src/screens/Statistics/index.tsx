@@ -1,14 +1,28 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { useTheme } from "styled-components/native";
-import { Box } from "../../components/Box";
+import { useNavigation } from "@react-navigation/native";
+import getStatusColor from "../../utils/statusColor";
 import { PercentHeader } from "../../components/PercentHeader";
+import { HeaderNavigation } from "../../components/HeaderNavigation";
+import { Box } from "../../components/Box";
 
 import * as S from "./styles";
 
 function Statistics() {
+  const statusColor = getStatusColor(54);
+  const navigation = useNavigation();
   const theme = useTheme();
+
+  const handleGoBack = () => {
+    navigation.navigate("Home");
+  };
+
   return (
-    <View>
+    <S.Wrapper backgroundColor={statusColor.light}>
+      <HeaderNavigation
+        onClickArrowLeft={handleGoBack}
+        color={statusColor.dark}
+      />
       <PercentHeader percent={90.86} />
       <S.Content>
         <S.ContentHead>
@@ -41,7 +55,8 @@ function Statistics() {
           </View>
         </View>
       </S.Content>
-    </View>
+    </S.Wrapper>
   );
 }
+
 export default Statistics;

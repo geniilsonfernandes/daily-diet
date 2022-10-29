@@ -1,4 +1,25 @@
+import { TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import styled, { css } from "styled-components/native";
+
+type WrapperProps = {
+  backgroundColor: string;
+};
+export const Wrapper = styled(SafeAreaView)<WrapperProps>`
+  ${({ backgroundColor }) => css`
+    background: ${backgroundColor};
+  `}
+`;
+
+export const HeaderNavigation = styled.View`
+  ${({ theme }) => css`
+    position: absolute;
+    top: 68px;
+    left: ${theme.SPACING.SM};
+    z-index: 100;
+  `}
+`;
+export const IconBack = styled(TouchableOpacity)``;
 
 export const Content = styled.View`
   ${({ theme }) => css`
@@ -17,7 +38,7 @@ export const ContentHead = styled.View`
 export const ContentText = styled.Text`
   ${({ theme }) => css`
     text-align: center;
-    font-size: ${theme.FONT_SIZE.SM};
+    font-size: ${theme.FONT_SIZE.SM}px;
     color: ${theme.COLORS.BASE.GRAY_100};
     font-family: ${theme.FONT_FAMILY.BOLD};
   `}
@@ -28,7 +49,7 @@ export const BoxTitle = styled.Text`
     font-family: ${theme.FONT_FAMILY.BOLD};
     font-weight: 600;
     color: ${theme.COLORS.BASE.GRAY_100};
-    margin-bottom: ${theme.SPACING.SM - 8};
+    margin-bottom: ${theme.SPACING.SM - 8}px;
   `}
 `;
 export const SubTitle = styled.Text`
