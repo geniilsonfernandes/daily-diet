@@ -31,12 +31,10 @@ type FormData = {
 };
 
 function Create() {
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [mode, setMode] = useState<DateTimePickerModes>("date");
+  const [show, setShow] = useState(false);
   const navigation = useNavigation();
-
-  const handleNavigateToHome = () => {
-    navigation.navigate("Home");
-  };
-
   const theme = useTheme();
   const {
     control,
@@ -44,9 +42,10 @@ function Create() {
     setValue,
     formState: { errors }
   } = useForm<FormData>();
-  const [date, setDate] = useState<Date | undefined>(new Date());
-  const [mode, setMode] = useState<DateTimePickerModes>("date");
-  const [show, setShow] = useState(false);
+
+  const handleNavigateToHome = () => {
+    navigation.navigate("Home");
+  };
 
   const onChangeDateTimePicker = (event: DateTimePickerEvent, date?: Date) => {
     setShow(false);
@@ -79,7 +78,7 @@ function Create() {
   };
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
+    navigation.navigate("Feedback", { diet: data.diet });
   };
 
   useEffect(() => {
