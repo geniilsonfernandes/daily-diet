@@ -36,13 +36,18 @@ const DATA = [
 function Home() {
   const navigation = useNavigation();
   const pe = 86;
+
   const handleShowStatistics = () => {
     navigation.navigate("Statistics", {
       percent: pe
     });
   };
+
   const handleCreateNewMeal = () => {
     navigation.navigate("Create");
+  };
+  const handleShowMeal = (id: string) => {
+    navigation.navigate("Meal", { id });
   };
 
   return (
@@ -65,7 +70,12 @@ function Home() {
           sections={DATA}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <MealsCard title={item.meal} timer={item.time} diet={item.diet} />
+            <MealsCard
+              title={item.meal}
+              timer={item.time}
+              diet={item.diet}
+              onPress={() => handleShowMeal(item.id)}
+            />
           )}
           renderSectionHeader={(item) => (
             <S.SectionTitle>{item.section.title}</S.SectionTitle>

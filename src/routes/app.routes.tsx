@@ -6,6 +6,7 @@ import Feedback from "../screens/Feedback";
 import Create from "../screens/Create";
 import Home from "../screens/Home";
 import Statistics from "../screens/Statistics";
+import Meal from "../screens/Meal";
 
 export interface AuthStackParamList {
   Statistics: StatisticsTypes;
@@ -13,6 +14,9 @@ export interface AuthStackParamList {
   Create: undefined;
   Feedback: {
     diet: string;
+  };
+  Meal: {
+    id: string;
   };
 }
 
@@ -25,6 +29,7 @@ export function AppRoutes() {
       <Screen name="Statistics" component={Statistics} />
       <Screen name="Create" component={Create} />
       <Screen name="Feedback" component={Feedback} />
+      <Screen name="Meal" component={Meal} />
     </Navigator>
   );
 }
