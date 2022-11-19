@@ -20,7 +20,7 @@ export const HeaderNavigation = ({
           <Feather name="arrow-left" size={24} color={color} />
         </S.IconBack>
       </S.Item>
-      <S.Item>{title && <S.Title>{title}</S.Title>}</S.Item>
+      {title && <S.Title>{title}</S.Title>}
       <S.Item></S.Item>
     </S.HeaderNavigation>
   );

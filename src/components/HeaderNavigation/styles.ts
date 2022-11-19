@@ -21,6 +21,7 @@ export const Title = styled.Text`
     font-size: ${theme.FONT_SIZE.LG}px;
     color: ${theme.COLORS.BASE.GRAY_100};
     font-family: ${theme.FONT_FAMILY.BOLD};
+    min-width: 50%;
   `}
 `;
 export const IconBack = styled(TouchableOpacity)``;

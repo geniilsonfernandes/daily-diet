@@ -7,54 +7,79 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   View,
-  Vibration
+  Vibration,
+  Alert
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { useTheme } from "styled-components/native";
-import moment from "moment";
 import { HeaderNavigation } from "../../components/HeaderNavigation";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { ButtonOption } from "../../components/ButtonOption";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import moment from "moment";
 
 import * as S from "./styles";
-import { useNavigation } from "@react-navigation/native";
+import { MealTypes } from "../../types";
+import { saveNewMeal, updateMeal } from "../../store";
 
 type DateTimePickerModes = "date" | "time";
 type Diet = "yes" | "no";
+
 type FormData = {
   name: string;
   description: string;
-  date: Date | undefined;
-  time: Date | undefined;
+  date: string | number;
+  time: string;
   diet: Diet;
 };
 
 function Create() {
+  const route = useRoute();
+  const params = route.params as {
+    mode: "edit" | "create";
+    meal: MealTypes;
+  };
+
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [mode, setMode] = useState<DateTimePickerModes>("date");
   const [show, setShow] = useState(false);
   const navigation = useNavigation();
   const theme = useTheme();
+
   const {
     control,
     handleSubmit,
     setValue,
     formState: { errors }
-  } = useForm<FormData>();
+  } = useForm<FormData>({
+    defaultValues:
+      params.mode === "edit"
+        ? {
+            name: params.meal.name,
+            date: params.meal.date,
+            description: params.meal.description,
+            diet: params.meal.diet,
+            time: params.meal.time
+          }
+        : undefined
+  });
 
   const handleNavigateToHome = () => {
     navigation.navigate("Home");
   };
 
-  const onChangeDateTimePicker = (event: DateTimePickerEvent, date?: Date) => {
+  const onChangeDateTimePicker = (_: DateTimePickerEvent, date?: Date) => {
     setShow(false);
+
     if (mode === "date") {
       setDate(date);
-      setValue("date", date, { shouldValidate: true });
+      setValue("date", moment(date).format("DD.MM.YYYY"), {
+        shouldValidate: true
+      });
     } else {
       setDate(date);
-      setValue("time", date, { shouldValidate: true });
+      setValue("time", moment(date).format("HH:mm"), { shouldValidate: true });
     }
   };
 
@@ -77,8 +102,27 @@ function Create() {
     }
   };
 
+  const saveMeal = async (meal: MealTypes) => {
+    try {
+      if (params.mode === "edit") {
+        await updateMeal(params.meal.id, meal);
+        navigation.navigate("Feedback", { diet: meal.diet });
+      } else {
+        await saveNewMeal(meal);
+        navigation.navigate("Feedback", { diet: meal.diet });
+      }
+    } catch (error) {
+      Alert.alert(`Refeiçao`, "Não foi possivel salvar refeição");
+      console.log(error);
+    }
+  };
+
   const onSubmit = (data: FormData) => {
-    navigation.navigate("Feedback", { diet: data.diet });
+    saveMeal({
+      ...data,
+      id: String(Math.floor(Date.now() / 1000)),
+      dataRaw: date
+    });
   };
 
   useEffect(() => {
@@ -91,7 +135,7 @@ function Create() {
     <KeyboardAvoidingView style={{ backgroundColor: theme.COLORS.BASE.WHITE }}>
       <S.Wrapper backgroundColor={theme.COLORS.BASE.GRAY_500}>
         <HeaderNavigation
-          title="Nova Refeição"
+          title={params.mode === "create" ? "Nova Refeição" : "Editar refeição"}
           onClickArrowLeft={handleNavigateToHome}
         />
         <S.Content>
@@ -141,11 +185,7 @@ function Create() {
                 render={({ field: { value } }) => (
                   <Input
                     label="Data"
-                    value={
-                      value === undefined
-                        ? ""
-                        : moment(value).format("DD.MM.YYYY")
-                    }
+                    value={value}
                     editable={false}
                     onPress={() => showDateTimePicker("date")}
                     error={errors.date?.message}
@@ -163,9 +203,7 @@ function Create() {
                 render={({ field: { value } }) => (
                   <Input
                     label="Hora"
-                    value={
-                      value === undefined ? "" : moment(value).format("HH:mm")
-                    }
+                    value={value}
                     editable={false}
                     onPress={() => showDateTimePicker("time")}
                     error={errors.time?.message}
@@ -212,9 +250,11 @@ function Create() {
         <S.ContentFooter>
           <Button
             title={
-              Object.keys(errors).length > 0
-                ? "Preencha todos os campos "
-                : "Cadastrar refeição"
+              params.mode === "create"
+                ? Object.keys(errors).length > 0
+                  ? "Preencha todos os campos "
+                  : "Cadastrar refeição"
+                : "Salvar alterações"
             }
             fill
             isDisabled={Object.keys(errors).length > 0 ? true : false}

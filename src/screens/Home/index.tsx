@@ -1,59 +1,60 @@
-import { useNavigation } from "@react-navigation/native";
-import { SectionList, Text, View } from "react-native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useState, useCallback } from "react";
+import { SectionList, View } from "react-native";
 import { Button } from "../../components/Button";
 import { Header } from "../../components/Header";
 import { MealsCard } from "../../components/MealsCard";
 import { PercentCard } from "../../components/PercentCard";
+import { getAllMeals } from "../../store";
+import { MealTypes } from "../../types";
+import { filteringMeals } from "../../utils/filteringMeals";
 
 import * as S from "./styles";
 
-const DATA = [
-  {
-    title: "10.10.22",
-    data: [
-      { id: "31", meal: "X-tudo", time: "20:00", diet: false },
-      { id: "1212", meal: "Whey protein com leite", time: "20:00", diet: true }
-    ]
-  },
-  {
-    title: "10.09.22",
-    data: [
-      { id: "131", meal: "X-tudo", time: "20:00", diet: false },
-      { id: "211", meal: "Whey protein com leite", time: "20:00", diet: true },
-      { id: "3211", meal: "Whey protein com leite", time: "20:00", diet: true },
-      {
-        id: "21211",
-        meal: "Whey protein com leite",
-        time: "20:00",
-        diet: true
-      },
-      { id: "2121", meal: "Whey protein com leite", time: "20:00", diet: true },
-      { id: "21311", meal: "Whey protein com leite", time: "20:00", diet: true }
-    ]
-  }
-];
+type Data = {
+  title: string;
+  data: MealTypes[];
+};
 
 function Home() {
+  const [data, setData] = useState<Data[]>();
   const navigation = useNavigation();
-  const pe = 86;
 
   const handleShowStatistics = () => {
     navigation.navigate("Statistics", {
-      percent: pe
+      percent: 68
     });
   };
 
   const handleCreateNewMeal = () => {
-    navigation.navigate("Create");
+    navigation.navigate("Create", { mode: "create" });
   };
   const handleShowMeal = (id: string) => {
     navigation.navigate("Meal", { id });
   };
 
+  const getData = async () => {
+    try {
+      const data = await getAllMeals();
+
+      console.log(filteringMeals(data));
+
+      setData(filteringMeals(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getData();
+    }, [])
+  );
+
   return (
     <S.Wrapper>
       <Header />
-      <PercentCard onPress={() => handleShowStatistics()} percent={pe} />
+      <PercentCard onPress={() => handleShowStatistics()} percent={69} />
       <S.ListHead>
         <S.Label>Refeições</S.Label>
         <Button
@@ -67,11 +68,11 @@ function Home() {
         <SectionList
           showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={() => <View style={{ height: 10 }}></View>}
-          sections={DATA}
+          sections={data || []}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <MealsCard
-              title={item.meal}
+              title={item.name}
               timer={item.time}
               diet={item.diet}
               onPress={() => handleShowMeal(item.id)}

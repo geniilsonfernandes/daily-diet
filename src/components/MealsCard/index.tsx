@@ -1,10 +1,11 @@
 import { TouchableOpacityProps } from "react-native";
+import { DietTypes } from "../../types";
 import * as S from "./styles";
 
 export type MealsCardProps = {
   title: string;
   timer: string;
-  diet?: boolean;
+  diet?: DietTypes;
 } & TouchableOpacityProps;
 
 export const MealsCard = ({ title, timer, diet, ...rest }: MealsCardProps) => {
@@ -16,7 +17,7 @@ export const MealsCard = ({ title, timer, diet, ...rest }: MealsCardProps) => {
       <S.Timer>{timer}</S.Timer>
       <S.Divisor />
       <S.Title>{titleFormated}</S.Title>
-      <S.Status color={diet ? "GREEN" : "RED"} />
+      <S.Status color={diet === "yes" ? "GREEN" : "RED"} />
     </S.Wrapper>
   );
 };
