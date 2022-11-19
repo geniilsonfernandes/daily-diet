@@ -73,7 +73,7 @@ function Meal() {
           <Button
             title="Excluir refeição"
             icon="trash"
-            onPress={() => setModalVisible(false)}
+            onPress={() => setModalVisible(true)}
           />
         </S.FooterItem>
       </S.Footer>
