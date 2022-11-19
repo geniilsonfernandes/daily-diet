@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StatisticsTypes } from "../types";
+import { MealTypes, StatisticsTypes } from "../types";
 
 //screens
 import Feedback from "../screens/Feedback";
@@ -11,7 +11,10 @@ import Meal from "../screens/Meal";
 export interface AuthStackParamList {
   Statistics: StatisticsTypes;
   Home: undefined;
-  Create: undefined;
+  Create: {
+    mode: "edit" | "create";
+    meal?: MealTypes;
+  };
   Feedback: {
     diet: string;
   };
