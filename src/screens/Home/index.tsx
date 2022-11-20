@@ -6,8 +6,9 @@ import { Header } from "../../components/Header";
 import { MealsCard } from "../../components/MealsCard";
 import { PercentCard } from "../../components/PercentCard";
 import { getAllMeals } from "../../store";
-import { MealTypes } from "../../types";
+import { MealTypes, UserStatisticsTypes } from "../../types";
 import { filteringMeals } from "../../utils/filteringMeals";
+import { getUserStatistics } from "../../utils/getUserStatistics";
 
 import * as S from "./styles";
 
@@ -18,6 +19,7 @@ type Data = {
 
 function Home() {
   const [data, setData] = useState<Data[]>();
+  const [userStatistics, setUserStatistics] = useState<UserStatisticsTypes>();
   const navigation = useNavigation();
 
   const handleShowStatistics = () => {
@@ -29,6 +31,7 @@ function Home() {
   const handleCreateNewMeal = () => {
     navigation.navigate("Create", { mode: "create" });
   };
+
   const handleShowMeal = (id: string) => {
     navigation.navigate("Meal", { id });
   };
@@ -36,10 +39,10 @@ function Home() {
   const getData = async () => {
     try {
       const data = await getAllMeals();
-
-      console.log(filteringMeals(data));
-
-      setData(filteringMeals(data));
+      const filteredDATA = filteringMeals(data);
+      const { sequence } = getUserStatistics(data);
+      setUserStatistics(sequence);
+      setData(filteredDATA);
     } catch (error) {
       console.log(error);
     }
@@ -54,7 +57,10 @@ function Home() {
   return (
     <S.Wrapper>
       <Header />
-      <PercentCard onPress={() => handleShowStatistics()} percent={69} />
+      <PercentCard
+        onPress={() => handleShowStatistics()}
+        percent={userStatistics?.percentage}
+      />
       <S.ListHead>
         <S.Label>Refeições</S.Label>
         <Button

@@ -2,6 +2,7 @@ import DateTimePicker, {
   DateTimePickerEvent
 } from "@react-native-community/datetimepicker";
 import { useEffect, useState } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   Platform,
   KeyboardAvoidingView,
@@ -16,36 +17,26 @@ import { HeaderNavigation } from "../../components/HeaderNavigation";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { ButtonOption } from "../../components/ButtonOption";
-import { useNavigation, useRoute } from "@react-navigation/native";
 import moment from "moment";
 
-import * as S from "./styles";
-import { MealTypes } from "../../types";
+import { DietTypes, FormData, MealTypes } from "../../types";
 import { saveNewMeal, updateMeal } from "../../store";
 
-type DateTimePickerModes = "date" | "time";
-type Diet = "yes" | "no";
-
-type FormData = {
-  name: string;
-  description: string;
-  date: string | number;
-  time: string;
-  diet: Diet;
-};
+import * as S from "./styles";
 
 function Create() {
   const route = useRoute();
+  const navigation = useNavigation();
+  const theme = useTheme();
+
   const params = route.params as {
     mode: "edit" | "create";
     meal: MealTypes;
   };
 
   const [date, setDate] = useState<Date | undefined>(new Date());
-  const [mode, setMode] = useState<DateTimePickerModes>("date");
+  const [mode, setMode] = useState<"date" | "time">("date");
   const [show, setShow] = useState(false);
-  const navigation = useNavigation();
-  const theme = useTheme();
 
   const {
     control,
@@ -83,18 +74,18 @@ function Create() {
     }
   };
 
-  const onChangeDiet = (diet: Diet) => {
+  const onChangeDiet = (diet: DietTypes) => {
     setValue("diet", diet, { shouldValidate: true });
   };
 
-  const showMode = (currentMode: DateTimePickerModes) => {
+  const showMode = (currentMode: "date" | "time") => {
     if (Platform.OS === "android") {
       setShow(true);
     }
     setMode(currentMode);
   };
 
-  const showDateTimePicker = (mode: DateTimePickerModes) => {
+  const showDateTimePicker = (mode: "date" | "time") => {
     if (mode === "date") {
       showMode("date");
     } else {
@@ -120,8 +111,7 @@ function Create() {
   const onSubmit = (data: FormData) => {
     saveMeal({
       ...data,
-      id: String(Math.floor(Date.now() / 1000)),
-      dataRaw: date
+      id: String(Math.floor(Date.now() / 1000))
     });
   };
 

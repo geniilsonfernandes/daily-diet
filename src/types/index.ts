@@ -7,11 +7,10 @@ export type DietTypes = "yes" | "no";
 export interface MealTypes {
   name: string;
   description: string;
-  date: string | number;
+  date: string;
   time: string;
   diet: DietTypes;
   id: string;
-  dataRaw: Date | undefined;
 }
 
 export interface Meals {
@@ -24,4 +23,20 @@ export type FormData = {
   date: string;
   time: string;
   diet: DietTypes;
+};
+
+export type FilterdData = {
+  title: string;
+  data: MealTypes[];
+};
+
+export type UserStatisticsTypes = {
+  sequence: MealTypes[];
+  bestSequenc: number;
+  diet: {
+    inDiet: number;
+    outDiet: number;
+    allMeals: number;
+  };
+  percentage: number;
 };
